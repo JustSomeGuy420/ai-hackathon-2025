@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 
 export default function TariffSimulator() {
-  const [activeNav, setActiveNav] = useState('simulator');
+  const [activeNav, setActiveNav] = useState('Simulator');
   const [currentRate, setCurrentRate] = useState(15);
   const [proposedRate, setProposedRate] = useState(25);
   const [productCategory, setProductCategory] = useState('electronics');

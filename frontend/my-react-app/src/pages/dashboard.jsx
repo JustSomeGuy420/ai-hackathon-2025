@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import ProductCount from './../utility/api';
 
 export default function TariffTrackerDashboard() {
   const [activeNav, setActiveNav] = useState('Dashboard');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchMessage, setSearchMessage] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -17,8 +20,9 @@ export default function TariffTrackerDashboard() {
     }
   };
 
+  const p_count = ''
   const metrics = [
-    { icon: '📊', title: 'Tracked Products', value: '2,847', change: '+12% from last month', changeColor: 'text-green-400', bgColor: 'bg-blue-600' },
+    { icon: '📊', title: 'Tracked Products', value: <ProductCount/>, change: '+12% from last month', changeColor: 'text-green-400', bgColor: 'bg-blue-600' },
     { icon: '💰', title: 'Avg. Tariff Rate', value: '8.4%', change: '+0.3% this week', changeColor: 'text-red-400', bgColor: 'bg-green-600' },
     { icon: '⚠️', title: 'Price Alerts', value: '23', change: '5 critical', changeColor: 'text-yellow-400', bgColor: 'bg-yellow-600' },
     { icon: '🤖', title: 'AI Predictions', value: '94%', change: 'Accuracy rate', changeColor: 'text-green-400', bgColor: 'bg-purple-600' },
