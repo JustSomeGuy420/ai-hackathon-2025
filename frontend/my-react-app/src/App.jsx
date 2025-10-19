@@ -1,34 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-//import './App.css'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Navigate} from 'react-router-dom';
+import Landing from "./pages/landing";
 import TariffTrackerDashboard from "./pages/dashboard";
 import TariffSimulator from "./pages/simulator";
 import EconomicInsightDashboard from "./pages/insights";
 import SettingsPage from "./pages/settings";
 
 function App() {
+  const isLoggedIn = localStorage.getItem("loggedIn") === "true";
 
   return (
     <BrowserRouter>
-      {/* Navigation */}
-      {/* <nav>
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/simulator">Simulator</Link>
-        <Link to="/insights">Insights</Link>
-        <Link to="/settings">Settings</Link>
-      </nav> */}
-
       {/* Routes */}
       <Routes>
-        <Route path="/dashboard" element={<TariffTrackerDashboard />}/>
-        <Route path="/simulator" element={<TariffSimulator />} />
-        <Route path="/insights" element={<EconomicInsightDashboard />} />
-        <Route path="/settings" element={<SettingsPage />} />
+        {/* Default route = landing/login page */}
+        <Route 
+          path="/" 
+          element={ isLoggedIn ? <Navigate to="/dashboard" replace /> : <Landing />} 
+        />
+
+        {/* Protected routes (only accessible if logged in) */}
+        <Route 
+          path="/dashboard"
+          element={ isLoggedIn ? <TariffTrackerDashboard /> : <Navigate to="/" replace />}
+        />
+        <Route 
+          path="/simulator" 
+          element={ isLoggedIn ? <TariffSimulator /> : <Navigate to="/" replace /> } 
+        />
+        <Route 
+          path="/insights" 
+          element={ isLoggedIn ? <EconomicInsightDashboard /> : <Navigate to="/" replace /> } 
+        />
+        <Route 
+          path="/settings" 
+          element={ isLoggedIn ? <SettingsPage /> : <Navigate to="/" replace /> } 
+        />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
