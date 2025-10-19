@@ -14,4 +14,7 @@ export default defineConfig({
     },   
   }
   },
+  build: {
+    outDir: 'build', // 👈 this makes Vite output to 'build/' instead of 'dist/'
+  },
 })
