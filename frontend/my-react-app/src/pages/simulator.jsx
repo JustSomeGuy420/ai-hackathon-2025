@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
 
 export default function TariffSimulator() {
   const [activeNav, setActiveNav] = useState('Simulator');
@@ -79,61 +78,7 @@ export default function TariffSimulator() {
   const { currentPoints, proposedPoints } = generateChartPoints();
 
   return (
-    <div className="bg-gray-900 min-h-screen text-gray-100">
-      {/* Header */}
-      <header className="bg-gray-800 border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <h1 className="text-xl font-semibold text-white">TariffTracker AI</h1>
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center text-gray-300">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2"></div>
-                <span className="text-sm">Live</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <span className="text-sm text-gray-300">Welcome, John</span>
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-medium">JD</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Navigation */}
-      <nav className="bg-gray-800 border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-8">
-            {[['/dashboard','Dashboard'], ['/simulator','Simulator'], ['/insights','Insights'], ['/settings','Settings']].map((item) => (
-              <Link 
-                to={item[0]}
-                key={item[1]}
-                onClick={() => setActiveNav(item[1])}
-                className={`px-4 py-3 text-sm font-medium transition-all ${
-                  activeNav === item[1]
-                    ? 'text-white bg-blue-600 bg-opacity-20 border-b-2 border-blue-600'
-                    : 'text-gray-300 hover:text-white hover:bg-blue-600 hover:bg-opacity-10'
-                }`}
-              >
-                {item[1]}
-              </Link>
-              // <button
-              //   key={item}
-              //   onClick={() => setActiveNav(item)}
-              //   className={`px-4 py-3 text-sm font-medium transition-all ${
-              //     activeNav === item
-              //       ? 'text-white bg-blue-600 bg-opacity-20 border-b-2 border-blue-600'
-              //       : 'text-gray-300 hover:text-white hover:bg-blue-600 hover:bg-opacity-10'
-              //   }`}
-              // >
-              //   {item}
-              // </button>
-            ))}
-          </div>
-        </div>
-      </nav>
-
+    <div>
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}

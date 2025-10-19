@@ -1,34 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-//import './App.css'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Navigate} from 'react-router-dom';
+import { useState, useEffect } from "react";
+import Landing from "./pages/landing";
 import TariffTrackerDashboard from "./pages/dashboard";
 import TariffSimulator from "./pages/simulator";
 import EconomicInsightDashboard from "./pages/insights";
 import SettingsPage from "./pages/settings";
+import Navbar from "./components/navbar";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("loggedIn") === "true"
+  );
+
+  useEffect(() => {
+    const updateAuth = () => {
+      setIsLoggedIn(localStorage.getItem("loggedIn") === "true");
+    };
+
+    window.addEventListener("auth:updated", updateAuth);
+    return () => window.removeEventListener("auth:updated", updateAuth);
+  }, []);
 
   return (
     <BrowserRouter>
-      {/* Navigation */}
-      {/* <nav>
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/simulator">Simulator</Link>
-        <Link to="/insights">Insights</Link>
-        <Link to="/settings">Settings</Link>
-      </nav> */}
-
+    {isLoggedIn && <Navbar />}
       {/* Routes */}
       <Routes>
-        <Route path="/dashboard" element={<TariffTrackerDashboard />}/>
-        <Route path="/simulator" element={<TariffSimulator />} />
-        <Route path="/insights" element={<EconomicInsightDashboard />} />
-        <Route path="/settings" element={<SettingsPage />} />
+        {/* Default route = landing/login page */}
+        <Route 
+          path="/" 
+          element={ isLoggedIn ? <Navigate to="/dashboard" replace /> : <Landing />} 
+        />
+
+          {/* Protected routes (only accessible if logged in) */}
+          <Route 
+            path="/dashboard"
+            element={ isLoggedIn ? <TariffTrackerDashboard /> : <Navigate to="/" replace />}
+          />
+          <Route 
+            path="/simulator" 
+            element={ isLoggedIn ? <TariffSimulator /> : <Navigate to="/" replace /> } 
+          />
+          <Route 
+            path="/insights" 
+            element={ isLoggedIn ? <EconomicInsightDashboard /> : <Navigate to="/" replace /> } 
+          />
+          <Route 
+            path="/settings" 
+            element={ isLoggedIn ? <SettingsPage /> : <Navigate to="/" replace /> } 
+          />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
