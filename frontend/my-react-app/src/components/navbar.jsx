@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
+import MyLogo from '../assets/logo.jpeg';
 
 export default function Navbar() {
   const location = useLocation();
@@ -36,7 +37,15 @@ export default function Navbar() {
       <header className="bg-gray-800 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
-            <h1 className="text-xl font-semibold text-white">TariffTracker AI</h1>
+            <header>
+              {/* Use the variable in the src attribute */}
+            <img 
+              src={MyLogo} 
+              alt="Company Logo" 
+              style={{ width: '40px', height: 'auto' }} // Example styling
+            />
+        <nav>{/* Navigation links here */}</nav>
+      </header>
             <div className="flex items-center space-x-6">
               <div className="flex items-center text-gray-300">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2"></div>
