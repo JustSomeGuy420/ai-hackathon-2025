@@ -9,7 +9,8 @@ import Navbar from "./components/navbar";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("loggedIn") === "true"
+    // localStorage.getItem("loggedIn") === "true"
+    "true"
   );
 
   useEffect(() => {

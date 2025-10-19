@@ -130,10 +130,7 @@ export default function SettingsPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <button className="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center hover:bg-opacity-30 transition-all">
-                <span className="text-xl">←</span>
-              </button>
-              <div className="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gray-700 bg-opacity-20 rounded-lg flex items-center justify-center">
                 <span className="text-2xl">⚙️</span>
               </div>
               <div>
@@ -169,7 +166,7 @@ export default function SettingsPage() {
             {/* Country & Region */}
             <section className="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:shadow-lg transition-shadow">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-blue-700 rounded-lg flex items-center justify-center">
                   <span className="text-2xl">🌍</span>
                 </div>
                 <div>
@@ -226,7 +223,7 @@ export default function SettingsPage() {
             {/* Currency Settings */}
             <section className="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:shadow-lg transition-shadow">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-green-800 rounded-lg flex items-center justify-center">
                   <span className="text-2xl">💱</span>
                 </div>
                 <div>
@@ -284,7 +281,7 @@ export default function SettingsPage() {
             {/* Notification Preferences */}
             <section className="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:shadow-lg transition-shadow">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
                   <span className="text-2xl">🔔</span>
                 </div>
                 <div>
@@ -347,7 +344,7 @@ export default function SettingsPage() {
             <section className="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:shadow-lg transition-shadow">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                  <div className="w-10 h-10 bg-orange-700 rounded-lg flex items-center justify-center">
                     <span className="text-xl">📊</span>
                   </div>
                   <div>
@@ -388,7 +385,7 @@ export default function SettingsPage() {
             {/* Data & Privacy */}
             <section className="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:shadow-lg transition-shadow">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
                   <span className="text-xl">🔒</span>
                 </div>
                 <div>
@@ -443,7 +440,7 @@ export default function SettingsPage() {
             {/* Danger Zone */}
             <section className="bg-red-950 border border-red-600 rounded-xl p-6">
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-red-700 rounded-lg flex items-center justify-center">
                   <span className="text-xl">⚠️</span>
                 </div>
                 <div>
