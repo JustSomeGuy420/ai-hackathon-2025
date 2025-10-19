@@ -11,7 +11,12 @@ export default function Navbar() {
   );
 
   useEffect(() => {
-    const updateName = () => setUsername(localStorage.getItem("username") || "User");
+    const updateName = () => {
+      const stored = localStorage.getItem("username");
+      // Fallback if null, empty, or string "undefined"
+      setUsername(stored && stored !== "undefined" && stored.trim() !== "" ? stored : "User");
+    };
+    updateName();
     window.addEventListener("auth:updated", updateName);
     return () => window.removeEventListener("auth:updated", updateName);
   }, []);
