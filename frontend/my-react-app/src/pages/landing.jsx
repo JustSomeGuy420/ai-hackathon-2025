@@ -23,7 +23,10 @@ export default function Login() {
     // If the user is valid and the password matches
     if (storedUser && storedUser.password === data.password) {
       localStorage.setItem("loggedIn", "true");
-      console.log(`${storedUser.name} logged in successfully!`);
+      localStorage.setItem("username", storedUser.username);
+      window.dispatchEvent(new Event("auth:updated"));
+
+      console.log(`${storedUser.username} logged in successfully!`);
       navigate("/dashboard"); // send user to dashboard
     } else {
       alert("Invalid email or password");
@@ -74,7 +77,7 @@ export default function Login() {
             <input
               type="text"
               placeholder="Username"
-              {...register("name", { required: showRegister })}
+              {...register("username", { required: showRegister })}
             />
           )}
 
