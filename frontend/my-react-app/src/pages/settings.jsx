@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 
 export default function SettingsPage() {
-  const [activeNav, setActiveNav] = useState('Settings');
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  
-  const [settings, setSettings] = useState({
+  const LOCAL_KEY = "userSettings";
+
+  const defaultSettings = {
     country: 'US',
     region: 'CA',
     primaryCurrency: 'USD',
@@ -19,7 +17,22 @@ export default function SettingsPage() {
     notificationEmail: '',
     dataCollection: true,
     personalization: true
+  };
+
+  // ✅ Load from localStorage if exists
+  const [settings, setSettings] = useState(() => {
+    const saved = localStorage.getItem(LOCAL_KEY);
+    return saved ? JSON.parse(saved) : defaultSettings;
   });
+
+  const [activeNav, setActiveNav] = useState('Settings');
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // ✅ Save to localStorage when settings change
+  useEffect(() => {
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(settings));
+  }, [settings]);
 
   const [simulations] = useState([
     { id: 1, name: 'Electronics Tariff 2024', date: 'Dec 10, 2024' },
@@ -85,22 +98,9 @@ export default function SettingsPage() {
   };
 
   const handleResetSettings = () => {
-    if (confirm('Are you sure you want to reset all settings to default? This cannot be undone.')) {
-      setSettings({
-        country: 'US',
-        region: 'CA',
-        primaryCurrency: 'USD',
-        showLocalCurrency: true,
-        autoUpdateRates: true,
-        policyUpdates: true,
-        priceAlerts: true,
-        weeklyReports: false,
-        simulationReminders: false,
-        emailFrequency: 'weekly',
-        notificationEmail: '',
-        dataCollection: true,
-        personalization: true
-      });
+    if (confirm('Are you sure you want to reset all settings to default?')) {
+      setSettings(defaultSettings);
+      localStorage.removeItem(LOCAL_KEY);
     }
   };
 
