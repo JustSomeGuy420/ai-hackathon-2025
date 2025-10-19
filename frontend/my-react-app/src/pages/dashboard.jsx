@@ -1,5 +1,5 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function TariffTrackerDashboard() {
   const [activeNav, setActiveNav] = useState('Dashboard');
@@ -79,18 +79,30 @@ export default function TariffTrackerDashboard() {
       <nav className="bg-gray-800 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex space-x-8">
-            {['Dashboard', 'Simulator', 'Insights', 'Settings'].map((item) => (
-              <button
-                key={item}
-                onClick={() => setActiveNav(item)}
+            {[['/dashboard','Dashboard'], ['/simulator','Simulator'], ['/insights','Insights'], ['/settings','Settings']].map((item) => (
+              <Link 
+                to={item[0]}
+                key={item[1]}
+                onClick={() => setActiveNav(item[1])}
                 className={`px-4 py-3 text-sm font-medium transition-all ${
-                  activeNav === item
+                  activeNav === item[1]
                     ? 'text-white bg-blue-600 bg-opacity-20 border-b-2 border-blue-600'
                     : 'text-gray-300 hover:text-white hover:bg-blue-600 hover:bg-opacity-10'
                 }`}
               >
-                {item}
-              </button>
+                {item[1]}
+              </Link>
+              // <button
+              //   key={item}
+              //   onClick={() => setActiveNav(item)}
+              //   className={`px-4 py-3 text-sm font-medium transition-all ${
+              //     activeNav === item
+              //       ? 'text-white bg-blue-600 bg-opacity-20 border-b-2 border-blue-600'
+              //       : 'text-gray-300 hover:text-white hover:bg-blue-600 hover:bg-opacity-10'
+              //   }`}
+              // >
+              //   {item}
+              // </button>
             ))}
           </div>
         </div>
