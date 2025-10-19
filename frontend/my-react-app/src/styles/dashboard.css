@@ -1,0 +1,146 @@
+/* === Container === */
+.dashboard {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  color: #fff;
+}
+
+/* === Cards === */
+.card {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* === Metrics === */
+.metrics {
+  display: grid;
+  gap: 1.5rem;
+}
+@media (min-width: 768px) {
+  .metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .metrics {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.metric-icon {
+  display: flex;
+  align-items: center;
+}
+.metric-icon span {
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
+}
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* === Alerts === */
+.alerts {
+  margin-bottom: 2rem;
+}
+.alert-item {
+  background-color: rgba(55, 65, 81, 0.7);
+  border: 1px solid #4b5563;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+}
+.alert-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.alert-desc {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+/* === Table === */
+.table-container {
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid #4b5563;
+}
+.table th {
+  color: #9ca3af;
+  font-weight: 500;
+}
+.table tr:hover {
+  background-color: #374151;
+}
+
+/* === Search Bar === */
+.searchbar {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.searchbar input {
+  background-color: #374151;
+  border: 1px solid #4b5563;
+  color: #fff;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  width: 12rem;
+}
+.searchbar button {
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.searchbar button:hover {
+  background-color: #1d4ed8;
+}
+.searchbar button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* === Status Colors === */
+.text-green {
+  color: #4ade80;
+}
+.text-yellow {
+  color: #facc15;
+}
+.text-red {
+  color: #f87171;
+}
+.text-blue {
+  color: #60a5fa;
+}
+.bg-blue {
+  background-color: rgba(37, 99, 235, 0.2);
+}
+.bg-yellow {
+  background-color: rgba(250, 204, 21, 0.2);
+}
+.bg-red {
+  background-color: rgba(248, 113, 113, 0.2);
+}
