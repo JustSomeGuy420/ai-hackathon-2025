@@ -27,13 +27,14 @@ function App() {
       {/* Routes */}
       <Routes>
         {/* Default route = landing/login page */}
-        <Route 
+        {/* <Route 
           path="/" 
           element={ isLoggedIn ? <Navigate to="/dashboard" replace /> : <Landing />} 
-        />
+        /> */}
+        <Route path="/" element={ <Landing />} />
 
           {/* Protected routes (only accessible if logged in) */}
-          <Route 
+          {/* <Route 
             path="/dashboard"
             element={ isLoggedIn ? <TariffTrackerDashboard /> : <Navigate to="/" replace />}
           />
@@ -48,7 +49,12 @@ function App() {
           <Route 
             path="/settings" 
             element={ isLoggedIn ? <SettingsPage /> : <Navigate to="/" replace /> } 
-          />
+          /> */}
+
+          <Route path="/dashboard" element={ <TariffTrackerDashboard /> }/>
+          <Route path="/simulator" element={ <TariffSimulator /> } />
+          <Route path="/insights" element={ <EconomicInsightDashboard /> } />
+          <Route path="/settings" element={ <SettingsPage /> } />
       </Routes>
     </BrowserRouter>
   );

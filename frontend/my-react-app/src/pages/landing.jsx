@@ -26,8 +26,7 @@ export default function Login() {
       // 1. Send POST request to the Django login endpoint (token endpoint)
       // NOTE: You must set up djangorestframework-simplejwt for this endpoint to work!
       const response = await axios.post(`${API_BASE_URL}/token/`, {
-        username: data.email, // Django usually expects 'username', but we'll try 'email' first
-        // If your Django uses username for login: username: data.username,
+        email: data.email, 
         password: data.password,
       });
 
@@ -38,7 +37,6 @@ export default function Login() {
       localStorage.setItem("access_token", access);
       localStorage.setItem("refresh_token", refresh);
       localStorage.setItem("loggedIn", "true");
-      // You may need another API call to fetch the actual username/email
       
       window.dispatchEvent(new Event("auth:updated"));
       console.log("Logged in successfully! Tokens received.");
@@ -63,8 +61,8 @@ export default function Login() {
     try {
       // 1. Send POST request to the Django registration endpoint
       const response = await axios.post(`${API_BASE_URL}/register/`, {
-        username: data.username,
-        email: data.email,
+        username: data.email,
+        // email: data.email,
         password: data.password,
       });
 
@@ -84,8 +82,8 @@ export default function Login() {
         // Check for specific Django validation errors
         if (errorData.username) {
           setAuthError(`Username: ${errorData.username[0]}`);
-        } else if (errorData.email) {
-          setAuthError(`Email: ${errorData.email[0]}`);
+        // } else if (errorData.email) {
+        //   setAuthError(`Email: ${errorData.email[0]}`);
         } else {
           setAuthError("Registration failed. Please check your inputs.");
         }
@@ -104,7 +102,7 @@ export default function Login() {
           A real-time dashboard to visualize how trade tariffs affect market prices,
           imports, and exports. Compare scenarios and make data-driven decisions.
         </p>
-        <a href="#auth" className="scroll-btn">Get Started</a>
+        <a href="/dashboard" className="scroll-btn">Get Started</a>
       </section>
 
       {/* ABOUT SECTION */}
@@ -118,14 +116,14 @@ export default function Login() {
 
       {/* LOGIN/REGISTER SECTION */}
       <section id="auth" className="auth-section">
-        <h2>{showRegister ? "Register" : "Login"}</h2>
+        {/* <h2>{showRegister ? "Register" : "Login"}</h2>
         {authError && <p className="error" style={{color: 'red'}}>{authError}</p>} 
 
         <form
           className="auth-form"
           onSubmit={handleSubmit(showRegister ? onRegister : onLogin)}
-        >
-          {showRegister && (
+        > */}
+          {/* {showRegister && (
             <input
               type="text"
               placeholder="Username"
@@ -133,9 +131,9 @@ export default function Login() {
               {...register("username", { required: showRegister && "Username is required" })}
             />
           )}
-          {showRegister && errors.username && <p className="error">{errors.username.message}</p>}
+          {showRegister && errors.username && <p className="error">{errors.username.message}</p>} */}
 
-          <input
+          {/* <input
             type="email"
             placeholder="Email"
             {...register("email", { required: "Email is required" })}
@@ -164,7 +162,7 @@ export default function Login() {
               <span onClick={() => { setShowRegister(true); setAuthError(""); }}>Register here</span>
             </>
           )}
-        </p>
+        </p> */}
       </section>
     </div>
   );
