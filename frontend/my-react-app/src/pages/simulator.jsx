@@ -92,21 +92,6 @@ export default function TariffSimulator() {
           <h3 className="text-lg font-semibold text-white mb-6">Simulation Parameters</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Product Category</label>
-              <select 
-                value={productCategory}
-                onChange={(e) => setProductCategory(e.target.value)}
-                className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
-              >
-                <option value="electronics">📱 Electronics</option>
-                <option value="food">🍎 Food & Agriculture</option>
-                <option value="textiles">👕 Textiles</option>
-                <option value="steel">🏗️ Steel & Metal</option>
-                <option value="automotive">🚗 Automotive</option>
-                <option value="energy">⚡ Energy</option>
-              </select>
-            </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Import Country</label>
