@@ -1,25 +1,9 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
 
 export default function Navbar() {
   const location = useLocation();
-  const navigate = useNavigate();
-
-  // Read username from localStorage (fallback to "User")
-  const [username, setUsername] = useState(
-    localStorage.getItem("username") || "User"
-  );
-
-  useEffect(() => {
-    const updateName = () => {
-      const stored = localStorage.getItem("username");
-      // Fallback if null, empty, or string "undefined"
-      setUsername(stored && stored !== "undefined" && stored.trim() !== "" ? stored : "User");
-    };
-    updateName();
-    window.addEventListener("auth:updated", updateName);
-    return () => window.removeEventListener("auth:updated", updateName);
-  }, []);
+  const { username, logout } = useAuth();
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard" },
@@ -27,13 +11,6 @@ export default function Navbar() {
     { path: "/insights", label: "Insights" },
     { path: "/settings", label: "Settings" },
   ];
-
-  const handleLogout = () => {
-    localStorage.setItem("loggedIn", false);
-    localStorage.removeItem("username");
-    window.dispatchEvent(new Event("auth:updated"));
-    navigate("/"); // back to landing/login
-  };
 
   return (
     <div className="bg-gray-900 text-gray-100">
@@ -55,7 +32,7 @@ export default function Navbar() {
                 </div>
 
                 {/* Logout */}
-                <button onClick={handleLogout} className="ml-4 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500 transition">Logout</button>
+                <button onClick={logout} className="ml-4 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500 transition">Logout</button>
               </div>
             </div>
           </div>

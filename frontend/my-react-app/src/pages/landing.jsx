@@ -1,47 +1,28 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import useAuth from "./../hooks/useAuth";
 import "./../styles/landing.css";
 
 export default function Login() {
-  // Setup react-hook-form
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  // Ability to navigate to another page
+  const { login, register: registerUser } = useAuth();
   const navigate = useNavigate();
-
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [showRegister, setShowRegister] = useState(false);
 
   // When user submits form
   const onLogin = (data) => {
-    const storedUser = JSON.parse(localStorage.getItem(data.email));
-
-    // If the user is valid and the password matches
-    if (storedUser && storedUser.password === data.password) {
-      localStorage.setItem("loggedIn", "true");
-      localStorage.setItem("username", storedUser.username);
-      window.dispatchEvent(new Event("auth:updated"));
-
-      console.log(`${storedUser.username} logged in successfully!`);
-      navigate("/dashboard"); // send user to dashboard
-    } else {
-      alert("Invalid email or password");
-    }
+    const user = login(data.email, data.password);
+    if (user) {
+      console.log(`${user.username} logged in successfully!`);
+      navigate("/dashboard");
+    } else alert("Invalid email or password");
   };
 
   const onRegister = (data) => {
-    const existing = JSON.parse(localStorage.getItem(data.email));
-    if (existing) {
-      alert("Email already registered");
-    } else {
-      localStorage.setItem(data.email, JSON.stringify(data));
-      alert("Registered successfully! You can now log in.");
-      setShowRegister(false);
-    }
+    const success = registerUser(data);
+    alert(success ? "Registered successfully! You can now log in." : "Email already registered");
+    if (success) setShowRegister(false);
   };
 
 
@@ -74,27 +55,12 @@ export default function Login() {
           onSubmit={handleSubmit(showRegister ? onRegister : onLogin)}
         >
           {showRegister && (
-            <input
-              type="text"
-              placeholder="Username"
-              {...register("username", { required: showRegister })}
-            />
+            <input type="text" placeholder="Username" {...register("username", { required: showRegister })} />
           )}
-
-          <input
-            type="email"
-            placeholder="Email"
-            {...register("email", { required: "Email is required" })}
-          />
-          {errors.email && <p className="error">{errors.email.message}</p>}
-
-          <input
-            type="password"
-            placeholder="Password"
-            {...register("password", { required: "Password is required" })}
-          />
+          <input type="email" placeholder="Email" {...register("email", { required: "Email is required" })} />
+          <input type="password" placeholder="Password" {...register("password", { required: "Password is required" })} />
+          
           {errors.password && <p className="error">{errors.password.message}</p>}
-
           <button type="submit">{showRegister ? "Register" : "Login"}</button>
         </form>
 
