@@ -1,49 +1,99 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"; // 👈 IMPORT AXIOS
 import "./../styles/landing.css";
 
+// Define the base URL for your Django backend
+const API_BASE_URL = "http://127.0.0.1:8000/api";
+
 export default function Login() {
-  // Setup react-hook-form
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  // Ability to navigate to another page
   const navigate = useNavigate();
-
   const [showRegister, setShowRegister] = useState(false);
+  const [authError, setAuthError] = useState(""); // State for displaying API errors
 
-  // When user submits form
-  const onLogin = (data) => {
-    const storedUser = JSON.parse(localStorage.getItem(data.email));
+  // --- LOGIN FUNCTION (Django API Integration) ---
+  const onLogin = async (data) => {
+    setAuthError(""); // Clear previous errors
 
-    // If the user is valid and the password matches
-    if (storedUser && storedUser.password === data.password) {
+    try {
+      // 1. Send POST request to the Django login endpoint (token endpoint)
+      // NOTE: You must set up djangorestframework-simplejwt for this endpoint to work!
+      const response = await axios.post(`${API_BASE_URL}/token/`, {
+        username: data.email, // Django usually expects 'username', but we'll try 'email' first
+        // If your Django uses username for login: username: data.username,
+        password: data.password,
+      });
+
+      // 2. Handle successful response
+      const { access, refresh } = response.data; // Expect tokens back
+      
+      // Store tokens and user state
+      localStorage.setItem("access_token", access);
+      localStorage.setItem("refresh_token", refresh);
       localStorage.setItem("loggedIn", "true");
-      localStorage.setItem("username", storedUser.username);
+      // You may need another API call to fetch the actual username/email
+      
       window.dispatchEvent(new Event("auth:updated"));
+      console.log("Logged in successfully! Tokens received.");
+      navigate("/dashboard");
 
-      console.log(`${storedUser.username} logged in successfully!`);
-      navigate("/dashboard"); // send user to dashboard
-    } else {
-      alert("Invalid email or password");
+    } catch (error) {
+      // 3. Handle login errors (e.g., Invalid credentials)
+      console.error("Login failed:", error.response);
+      setAuthError("Invalid email or password.");
+
+      // You can get more specific errors from Django:
+      // if (error.response?.data.detail) {
+      //   setAuthError(error.response.data.detail);
+      // }
     }
   };
 
-  const onRegister = (data) => {
-    const existing = JSON.parse(localStorage.getItem(data.email));
-    if (existing) {
-      alert("Email already registered");
-    } else {
-      localStorage.setItem(data.email, JSON.stringify(data));
+  // --- REGISTER FUNCTION (Django API Integration) ---
+  const onRegister = async (data) => {
+    setAuthError(""); // Clear previous errors
+
+    try {
+      // 1. Send POST request to the Django registration endpoint
+      const response = await axios.post(`${API_BASE_URL}/register/`, {
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      });
+
+      // 2. Handle successful response (Status 201 Created)
+      console.log("Registration successful:", response.data);
       alert("Registered successfully! You can now log in.");
+
+      // Switch to the login view after successful registration
       setShowRegister(false);
+
+    } catch (error) {
+      // 3. Handle registration errors (e.g., email or username already exists)
+      console.error("Registration failed:", error.response);
+      
+      if (error.response && error.response.data) {
+        const errorData = error.response.data;
+        // Check for specific Django validation errors
+        if (errorData.username) {
+          setAuthError(`Username: ${errorData.username[0]}`);
+        } else if (errorData.email) {
+          setAuthError(`Email: ${errorData.email[0]}`);
+        } else {
+          setAuthError("Registration failed. Please check your inputs.");
+        }
+      } else {
+        setAuthError("Network error. Could not connect to the server.");
+      }
     }
   };
-
 
   return (
     <div className="landing-container">
@@ -69,6 +119,8 @@ export default function Login() {
       {/* LOGIN/REGISTER SECTION */}
       <section id="auth" className="auth-section">
         <h2>{showRegister ? "Register" : "Login"}</h2>
+        {authError && <p className="error" style={{color: 'red'}}>{authError}</p>} 
+
         <form
           className="auth-form"
           onSubmit={handleSubmit(showRegister ? onRegister : onLogin)}
@@ -77,9 +129,11 @@ export default function Login() {
             <input
               type="text"
               placeholder="Username"
-              {...register("username", { required: showRegister })}
+              // Username is required only for registration
+              {...register("username", { required: showRegister && "Username is required" })}
             />
           )}
+          {showRegister && errors.username && <p className="error">{errors.username.message}</p>}
 
           <input
             type="email"
@@ -102,12 +156,12 @@ export default function Login() {
           {showRegister ? (
             <>
               Already have an account?{" "}
-              <span onClick={() => setShowRegister(false)}>Login here</span>
+              <span onClick={() => { setShowRegister(false); setAuthError(""); }}>Login here</span>
             </>
           ) : (
             <>
               Don’t have an account?{" "}
-              <span onClick={() => setShowRegister(true)}>Register here</span>
+              <span onClick={() => { setShowRegister(true); setAuthError(""); }}>Register here</span>
             </>
           )}
         </p>
